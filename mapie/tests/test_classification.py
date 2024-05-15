@@ -716,7 +716,7 @@ def test_valid_estimator(strategy: str) -> None:
     clf = LogisticRegression().fit(X_toy, y_toy)
     mapie_clf = MapieClassifier(estimator=clf, **STRATEGIES[strategy][0])
     mapie_clf.fit(X_toy, y_toy)
-    assert isinstance(mapie_clf.single_estimator_, LogisticRegression)
+    assert isinstance(mapie_clf.estimator_.single_estimator_, LogisticRegression)
 
 
 @pytest.mark.parametrize("method", METHODS)
@@ -1669,7 +1669,7 @@ def test_fit_parameters_passing() -> None:
 
     mapie.fit(X, y, monitor=early_stopping_monitor)
 
-    assert mapie.single_estimator_.estimators_.shape[0] == 3
+    assert mapie.estimator_.single_estimator_.estimators_.shape[0] == 3
 
-    for estimator in mapie.estimators_:
+    for estimator in mapie.estimator_.estimators_:
         assert estimator.estimators_.shape[0] == 3
