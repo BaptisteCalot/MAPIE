@@ -994,7 +994,7 @@ def test_results_for_alpha_as_float_and_arraylike(strategy: str, alpha: Any) -> 
 @pytest.mark.parametrize("strategy", [*STRATEGIES])
 def test_results_single_and_multi_jobs(strategy: str) -> None:
     """
-    Test that MapieRegressor gives equal predictions
+    Test that MapieClassifier gives equal predictions
     regardless of number of parallel jobs.
     """
     args_init, args_predict = STRATEGIES[strategy]
@@ -1244,8 +1244,18 @@ def test_sum_proba_to_one_fit(y_pred_proba: NDArray) -> None:
     Test if when the output probabilities of the model do not
     sum to one, return an error in the fit method.
     """
+    print()
+    print("PRINTING")
+    print()
+    print("y_pred_proba", y_pred_proba, "shape", y_pred_proba.shape)
     wrong_model = WrongOutputModel(y_pred_proba)
     mapie_clf = MapieClassifier(wrong_model, cv="prefit")
+    print()
+    print("X_toy", X_toy, "shape", X_toy.shape)
+    print()
+    print("y_toy", y_toy, "shape", y_toy.shape)
+    print()
+    print()
     with pytest.raises(
         AssertionError, match=r".*The sum of the scores is not equal to one.*"
     ):
